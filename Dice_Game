@@ -1,0 +1,309 @@
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <cmath>
+
+using namespace std;
+
+/**
+ * This function checks if the bet amount is a positive integer
+ *
+ * @Param    No Parameters
+ *
+ * @Return   int    bet amount or -1
+ */
+int getDollar();
+
+/**
+ * This function returns a random number between given parameters
+ *
+ * @Param    int    rangeHigh, rangeLow
+ *
+ * @Return   int    a random number between rangeHigh and rangeLow
+ */
+int randomInt(int rangeHigh, int rangeLow);
+
+
+/**
+ * This function returns the stats of the dice game
+ *
+ * @Param    int    TotalGames, playerWinCount, playerWinnings,
+ *                  houseWinCount, houseWinnings
+ *
+ * @Return   no return
+ */
+ void printGameStats(int TotalGames,
+                 int playerWinCount,
+                 int playerWinnings,
+                 int houseWinCount, int houseWinnings);
+
+int main() {
+
+    int bet;
+    char play_again;
+    bool flag = true;
+    int dice1;
+    int dice2;
+    int total_dice = 0;
+    int TotalGames = 0;
+    int playerWinCount = 0;
+    int playerWinnings = 0;
+    int rounded_winning = 0;
+    int houseWinCount = 0;
+    int houseWinnings = 0;
+
+    srand(42);
+
+    bet = getDollar();
+
+    if (bet != -1) {
+        dice1 = randomInt(1,6);
+        dice2 = randomInt(1,6);
+        total_dice = dice1 + dice2;
+
+        if (total_dice == 7 || total_dice == 11){
+
+            TotalGames ++;
+            playerWinCount ++;
+            playerWinnings += bet * 2;
+            cout << "Roll = " << dice1 << " and " << dice2
+                 << " totaling " << total_dice << endl;
+            cout << "Player Wins $" << bet * 2
+                 << "!\n" << endl;
+
+        }
+
+        else if ((dice1 == dice2) &&
+            (dice1 == 2 || dice1 == 4 || dice1 == 5)) {
+
+             TotalGames ++;
+             playerWinCount ++;
+             rounded_winning = static_cast<int>(floor(bet * 1.5));
+             playerWinnings += rounded_winning;
+             cout << "Roll = " << dice1 << " and " << dice2
+                  << " totaling " << total_dice << endl;
+             cout << "Player Wins $" << rounded_winning
+                  << "!\n" << endl;
+
+        }
+
+        else if ((dice1 == dice2) &&
+            (dice1 == 1 || dice1 == 3 || dice1 == 6)) {
+
+                TotalGames ++;
+                houseWinCount ++;
+                houseWinnings += bet;
+                cout << "Roll = " << dice1 << " and " << dice2
+                     << " totaling " << total_dice << endl;
+                cout << "House Wins!\n" << endl;
+
+         }
+
+        else if (total_dice == 3 || total_dice == 5 ||
+                 total_dice == 9) {
+
+                TotalGames ++;
+                houseWinCount ++;
+                houseWinnings += bet;
+                cout << "Roll = " << dice1 << " and " << dice2
+                     << " totaling " << total_dice << endl;
+                cout << "House Wins!\n" << endl;
+
+        }
+
+        else {
+                TotalGames ++;
+                cout << "Roll = " << dice1 << " and " << dice2
+                     << " totaling " << total_dice << endl;
+                cout << "No Winner!\n" << endl;
+        }
+    }
+
+    while (flag == true) {
+
+        cout << "Do you want to play again Y/N? ";
+        cin >> play_again;
+        cin.ignore(10000, '\n');
+
+        if (tolower(play_again) == 'y') {
+
+            bet = getDollar();
+
+            if (bet != -1) {
+
+                dice1 = randomInt(1,6);
+                dice2 = randomInt(1,6);
+                total_dice = dice1 + dice2;
+
+                if (total_dice == 7 || total_dice == 11){
+
+                    TotalGames ++;
+                    playerWinCount ++;
+                    playerWinnings += bet * 2;
+                    cout << "Roll = " << dice1 << " and " << dice2
+                         << " totaling " << total_dice << endl;
+                    cout << "Player Wins $" << bet * 2
+                         << "!\n" << endl;
+
+                }
+
+                else if ((dice1 == dice2) &&
+                    (dice1 == 2 || dice1 == 4 || dice1 == 5)) {
+
+                     TotalGames ++;
+                     playerWinCount ++;
+                     rounded_winning = static_cast<int>(floor(bet * 1.5));
+                     playerWinnings += rounded_winning;
+                     cout << "Roll = " << dice1 << " and " << dice2
+                          << " totaling " << total_dice << endl;
+                     cout << "Player Wins $" << rounded_winning
+                          << "!\n" << endl;
+
+                }
+
+                else if ((dice1 == dice2) &&
+                    (dice1 == 1 || dice1 == 3 || dice1 == 6)) {
+
+                        TotalGames ++;
+                        houseWinCount ++;
+                        houseWinnings += bet;
+                        cout << "Roll = " << dice1 << " and " << dice2
+                             << " totaling " << total_dice << endl;
+                        cout << "House Wins!\n" << endl;
+
+                 }
+
+                else if (total_dice == 3 || total_dice == 5 ||
+                         total_dice == 9) {
+
+                        TotalGames ++;
+                        houseWinCount ++;
+                        houseWinnings += bet;
+                        cout << "Roll = " << dice1 << " and " << dice2
+                             << " totaling " << total_dice << endl;
+                        cout << "House Wins!\n" << endl;
+
+                }
+
+                else {
+                        TotalGames ++;
+                        cout << "Roll = " << dice1 << " and " << dice2
+                             << " totaling " << total_dice << endl;
+                        cout << "No Winner!\n" << endl;
+                }
+            }
+
+        }
+
+        else {
+
+            cout << "\nGame over. Thanks for playing!" << endl;
+            flag = false;
+
+        }
+    }
+
+    printGameStats(TotalGames,
+                    playerWinCount,
+                    playerWinnings,
+                    houseWinCount,houseWinnings);
+
+
+
+    return 0;
+}
+
+int getDollar() {
+
+    int result = -1;
+    const int BET_ATTEMPT = 3;
+    int attempt_count = 0;
+    int dollars;
+    bool correct_input = false;
+
+    while (attempt_count < BET_ATTEMPT && correct_input == false) {
+
+        cout << "Enter a bet in integer dollars: ";
+        cin >> dollars;
+
+        if (cin.fail()) {
+
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            attempt_count ++;
+
+            cout << "Error... " << (BET_ATTEMPT - attempt_count)
+                 << " attempt(s) left!" << endl;
+
+
+        }
+
+        else if (cin.peek() != '\n') {
+
+            cin.ignore(10000, '\n');
+
+            attempt_count ++;
+
+            cout << "Error... " << (BET_ATTEMPT - attempt_count)
+                 << " attempt(s) left!" << endl;
+        }
+
+        else if (dollars <= 0) {
+
+            attempt_count ++;
+
+            cout << "Error... " << (BET_ATTEMPT - attempt_count)
+                 << " attempt(s) left!" << endl;
+
+        }
+
+        else {
+
+            correct_input = true;
+            result = dollars;
+            cin.ignore(10000, '\n');
+
+        }
+    }
+
+    if (!(attempt_count < BET_ATTEMPT)) {
+
+        cout << "\nInvalid input, session over.\n" << endl;
+
+    }
+
+    return result;
+
+}
+
+int randomInt(int rangeHigh, int rangeLow) {
+
+
+    int minVal = (rangeHigh < rangeLow) ? rangeHigh : rangeLow;
+    int maxVal = (rangeHigh > rangeLow) ? rangeHigh : rangeLow;
+
+    int rand_num = rand() % (maxVal - minVal + 1) + minVal;
+
+    return rand_num;
+}
+
+void printGameStats(int TotalGames,
+                 int playerWinCount,
+                 int playerWinnings,
+                 int houseWinCount, int houseWinnings) {
+
+    cout << "Game Stats" << endl;
+    cout << "------------------------------------" << endl;
+    cout << setw(30) << left << "Total Games:"
+         << setw(8) << right << TotalGames << endl;
+    cout << setw(30) << left << "Number of times the player won:"
+         << setw(8) << right << playerWinCount << endl;
+    cout << setw(30) << left << "Player Winnings:"
+         << setw(8) << right << playerWinnings << endl;
+    cout << setw(30) << left << "Number of times the house won:"
+         << setw(8) << right << houseWinCount << endl;
+    cout << setw(30) << left << "House Winnings:"
+         << setw(8) << right << houseWinnings << endl;
+
+}
